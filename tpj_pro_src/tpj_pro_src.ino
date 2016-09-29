@@ -3,13 +3,15 @@
 
 /**************** PIN ASSIGNMENT ******************/
 
-// light sensor
-#define PIN_LDR_INPUT 3
-#define PIN_LDR_OUTPUT_RED 8
-#define PIN_LDR_OUTPUT_GREEN 9
+#define PIN_IN_LDR 3          // light sensor
+#define PIN_IN_SOIL_SENSOR 0  // soil YL-69
 
-// servo
-#define PIN_SERVO 10
+#define PIN_OUT_LED_R    9
+#define PIN_OUT_LED_G    8
+#define PIN_OUT_LED_Y    10
+
+#define PIN_OUTPUT_SERVO 10   // servo output 
+
 /**************************************************/
 
 
@@ -83,14 +85,51 @@ void setup() {
   // serial setup
   Serial.begin(9600);
 
-  LDR_init();
-  Servo_init();
+//  LDR_init();
+//  Servo_init();
+
+  // green
+  pinMode(8, OUTPUT); 
+  
+  //red
+  pinMode(9, OUTPUT); 
+
+  //red
+  pinMode(10, OUTPUT); 
+
 }
 
+int readValue;
 void loop() {
   // light sensor control
-  LDR_control();
-  Servo_control();
+//  LDR_control();
+//  Servo_control();
+
+  readValue = analogRead(PIN_SOIL_SENSOR_A0);
+
+  // higher dryer
+  Serial.println(readValue);
+  
+  if(readValue < 500)
+  {
+    digitalWrite(PIN_LDR_OUTPUT_GREEN, HIGH);
+    digitalWrite(PIN_LDR_OUTPUT_YELLOW, LOW);
+    digitalWrite(PIN_LDR_OUTPUT_RED, LOW);
+    
+  }
+  else if(readValue >= 500 && readValue < 1000)
+  {
+    digitalWrite(PIN_LDR_OUTPUT_YELLOW, HIGH);
+    digitalWrite(PIN_LDR_OUTPUT_RED, LOW);
+    digitalWrite(PIN_LDR_OUTPUT_GREEN, LOW);
+    
+  }
+  else
+  {
+    digitalWrite(PIN_LDR_OUTPUT_RED, HIGH);
+    digitalWrite(PIN_LDR_OUTPUT_YELLOW, LOW);
+    digitalWrite(PIN_LDR_OUTPUT_GREEN, LOW);
+  }
 
   delay(500);
 }
