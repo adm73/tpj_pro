@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD1B85B71DB70F3A004C3821 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B85B61DB70F3A004C3821 /* PreferencesViewController.swift */; };
+		DD1B85BB1DB71A5F004C3821 /* BrightnessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B85BA1DB71A5F004C3821 /* BrightnessViewController.swift */; };
+		DD1B85BD1DB71A76004C3821 /* TemperatureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B85BC1DB71A76004C3821 /* TemperatureViewController.swift */; };
+		DD1B85BF1DB71A8B004C3821 /* HumidityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1B85BE1DB71A8B004C3821 /* HumidityViewController.swift */; };
 		DDFA44271D92F652001A48EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA44261D92F652001A48EE /* AppDelegate.swift */; };
 		DDFA44291D92F652001A48EE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA44281D92F652001A48EE /* ViewController.swift */; };
 		DDFA442C1D92F652001A48EE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDFA442A1D92F652001A48EE /* Main.storyboard */; };
@@ -15,6 +19,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DD1B85B61DB70F3A004C3821 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
+		DD1B85BA1DB71A5F004C3821 /* BrightnessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrightnessViewController.swift; sourceTree = "<group>"; };
+		DD1B85BC1DB71A76004C3821 /* TemperatureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TemperatureViewController.swift; sourceTree = "<group>"; };
+		DD1B85BE1DB71A8B004C3821 /* HumidityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumidityViewController.swift; sourceTree = "<group>"; };
 		DDFA44231D92F652001A48EE /* tpj453_GUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tpj453_GUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDFA44261D92F652001A48EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DDFA44281D92F652001A48EE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +64,10 @@
 			children = (
 				DDFA44261D92F652001A48EE /* AppDelegate.swift */,
 				DDFA44281D92F652001A48EE /* ViewController.swift */,
+				DD1B85BA1DB71A5F004C3821 /* BrightnessViewController.swift */,
+				DD1B85BC1DB71A76004C3821 /* TemperatureViewController.swift */,
+				DD1B85BE1DB71A8B004C3821 /* HumidityViewController.swift */,
+				DD1B85B61DB70F3A004C3821 /* PreferencesViewController.swift */,
 				DDFA442A1D92F652001A48EE /* Main.storyboard */,
 				DDFA442D1D92F652001A48EE /* Assets.xcassets */,
 				DDFA442F1D92F652001A48EE /* LaunchScreen.storyboard */,
@@ -138,7 +150,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDFA44291D92F652001A48EE /* ViewController.swift in Sources */,
+				DD1B85BB1DB71A5F004C3821 /* BrightnessViewController.swift in Sources */,
 				DDFA44271D92F652001A48EE /* AppDelegate.swift in Sources */,
+				DD1B85BF1DB71A8B004C3821 /* HumidityViewController.swift in Sources */,
+				DD1B85B71DB70F3A004C3821 /* PreferencesViewController.swift in Sources */,
+				DD1B85BD1DB71A76004C3821 /* TemperatureViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +316,7 @@
 				DDFA44371D92F652001A48EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
