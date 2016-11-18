@@ -12,55 +12,55 @@ SoftwareSerial BT(14, 15); // Uno on Board: 9 rx, 10 tx; Mega 2560: 14 tx, 15 rx
 LiquidCrystal_I2C lcd(0x27, 20, 4); // set the LCD address to 0x27 for a 20 chars and 4 line display
 
 // TEMP SENSOR
-int PIN_TEMP_SENSOR = A5;
+int PIN_TEMP_SENSOR =               A5;
 
 // BRT SENSOR
-int PIN_BRT_SENSOR_1 = A2;
-int PIN_BRT_SENSOR_2 = A3;
+int PIN_BRT_SENSOR_1 =              A2;
+int PIN_BRT_SENSOR_2 =              A3;
 
 // SOIL MOISTURE SENSOR
-int PIN_HUM_SENSOR = A4;
+int PIN_HUM_SENSOR =                A4;
 
 // Heater
-int PIN_HEATER_OUTPUT = 22;
+int PIN_HEATER_OUTPUT =             22;
 
 // COVER
-int PIN_SERVO_1 = 7;
-int PIN_SERVO_2 = 6;
-int PIN_SERVO_3 = 28;
-int PIN_SERVO_4 = 30;
+int PIN_SERVO_1 =                   7;
+int PIN_SERVO_2 =                   6;
+int PIN_SERVO_3 =                   28;
+int PIN_SERVO_4 =                   30;
 
 // WATER PUMP
-int PIN_WPUMP_ENABLE = 12; // enable
-int PIN_WPUMP_IN = 11;    // in
-int PIN_WPUMP_RELAY = 13;    // for relay
-int PIN_WPUMP_SPEED = A0;    // speed
+int PIN_WPUMP_ENABLE =            12; // enable
+int PIN_WPUMP_IN =                11; // in
+int PIN_WPUMP_RELAY =             13; // for relay
+int PIN_WPUMP_SPEED =             A0; // speed
 
 // LED
-int PIN_LED_GREEN = 10;
-int PIN_LED_YELLOW = 9;
-int PIN_LED_RED = 8;
+int PIN_LED_GREEN =                   10;
+int PIN_LED_YELLOW =                  9;
+int PIN_LED_RED =                     8;
 
 // Fan Motor
-int PIN_FAN_MOTOR_ENABLE = 5; // pin enable
-int PIN_FAN_MOTOR_IN = 4;    // pin in
-int PIN_FAN_MOTOR_SPEED = A1;  // speed
+int PIN_FAN_MOTOR_ENABLE =      5; // pin enable
+int PIN_FAN_MOTOR_IN =          4;    // pin in
+int PIN_FAN_MOTOR_SPEED =       A1;  // speed
 
-#define SERVO_MAX_ANGLE 180
-#define SERVO_MIN_ANGLE 10
+#define SERVO_MAX_ANGLE         180
+#define SERVO_MIN_ANGLE         10
 
-#define HUM_MAX_VALUE  800
-#define HUM_MIN_VALUE  500
+#define HUM_MAX_VALUE           800
+#define HUM_MIN_VALUE           500
 
-#define BRT_MAX_VALUE  700
+#define BRT_MAX_VALUE           700
 
-#define TMP_MAX_VALUE  30
-#define TMP_MIN_VALUE  16
+#define TMP_MAX_VALUE           30
+#define TMP_MIN_VALUE           16
 
-#define LOCK_HEATER 0
-#define LOCK_COVER  1
-#define LOCK_FAN  2
-#define LOCK_WPUMP 3
+#define LOCK_HEATER             0
+#define LOCK_COVER              1
+#define LOCK_FAN                2
+#define LOCK_WPUMP              3
 
 Servo servo1;
 Servo servo2;
