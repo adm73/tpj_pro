@@ -1,7 +1,7 @@
 #include <SoftwareSerial.h>
 
 
-SoftwareSerial BT(10,9); // rx, tx
+SoftwareSerial BT(14, 15); // Uno onBoard: 9 rx, 10 tx; Mega 2560: 14 tx, 15 rx
 
 
 char ch;
@@ -57,7 +57,7 @@ void bt_setup(void)
   BT.println("DT in House");
 }
 
-void send_msg(char *prefix, int value)
+void bt_send_msg(char *prefix, int value)
 {
   char str[16] = "\0";
 
@@ -66,7 +66,7 @@ void send_msg(char *prefix, int value)
   BT.println(str);
 }
 
-char get_msg(void)
+char bt_get_msg(void)
 {
   if(BT.available())
     return (BT.read());
@@ -183,19 +183,19 @@ void setup()
 void loop()
 {
   // Humidity
-  send_msg(" HUM,", get_hum());
+  bt_send_msg(" HUM,", get_hum());
   delay(200);
 
   // Brightness
-  send_msg(" BRT,", get_brt());
+  bt_send_msg(" BRT,", get_brt());
   delay(200);
 
   // Temperature
-  send_msg(" TMP,", get_tmp());
+  bt_send_msg(" TMP,", get_tmp());
   delay(200);
 
   // put your main code here, to run repeatedly:
-  ch = get_msg();
+  ch = bt_get_msg();
     switch(ch)
     {
       // Heater Switch Operate
@@ -210,6 +210,7 @@ void loop()
 
       // Fan Switch Operate
       case 'F':
+        oper_sw_fan();
         break;
 
       // Water Pump Operate

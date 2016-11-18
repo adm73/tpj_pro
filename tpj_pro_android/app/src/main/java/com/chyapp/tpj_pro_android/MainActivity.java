@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
     private static final int REQUEST_ENABLE_BT = 3;
 
+    private static final String BLUETOOTH_DEVICE_ID = "98:D3:31:30:4B:E3";
+
     private GoogleApiClient client;
 
     // bt status
@@ -154,10 +156,6 @@ public class MainActivity extends AppCompatActivity {
             // Get the message bytes and tell the BluetoothChatService to write
             byte[] send = message.getBytes();
             mChatService.write(send);
-
-            // Reset out string buffer to zero and clear the edit text field
-//            mOutStringBuffer.setLength(0);
-//            mOutEditText.setText(mOutStringBuffer);
         }
     }
 
@@ -176,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                         progress_value = i;
 
-                        Log.d("MA", "progress_value = " + progress_value);
+//                        Log.d("MA", "progress_value = " + progress_value);
                         String showedValue = String.valueOf(progress_value);
                         lb_set_hum.setText(showedValue);
                     }
@@ -223,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                         progress_value = i;
 
-                        Log.d("MA", "progress_value = " + progress_value);
+//                        Log.d("MA", "progress_value = " + progress_value);
                         String showedValue = String.valueOf(progress_value);
                         lb_set_temp.setText(showedValue);
                     }
@@ -240,34 +238,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
-
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        // Initialize the BluetoothChatService to perform bluetooth connections
-        mChatService = new BluetoothChatService(MainActivity.this, mHandler);
-
-        // init
-        lb_status = (TextView) findViewById(R.id.lb_bt_status);
-
-        lb_hum  = (TextView) findViewById(R.id.lb_Humidity);
-        lb_temp = (TextView) findViewById(R.id.lb_temperaure);
-        lb_brt  = (TextView) findViewById(R.id.lb_brightness);
-
-
-        lb_set_hum = (TextView) findViewById(R.id.lb_set_hum);
-        lb_set_brt = (TextView) findViewById(R.id.lb_set_brt);
-        lb_set_temp = (TextView) findViewById(R.id.lb_set_temp);
-
-        init_seekbar();
-
+    public void init_switch()
+    {
         sw_cover = (Switch) findViewById(R.id.swh_cover);
         sw_cover.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -312,21 +284,42 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
     }
 
-    public int doWork()
-    {
-        return 66;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        // Initialize the BluetoothChatService to perform bluetooth connections
+        mChatService = new BluetoothChatService(MainActivity.this, mHandler);
+
+        // init bluetooth label
+        lb_status = (TextView) findViewById(R.id.lb_bt_status);
+        bt_connect = (Button) findViewById(R.id.bt_bt_connect);
+
+        lb_hum  = (TextView) findViewById(R.id.lb_Humidity);
+        lb_temp = (TextView) findViewById(R.id.lb_temperaure);
+        lb_brt  = (TextView) findViewById(R.id.lb_brightness);
+
+        lb_set_hum = (TextView) findViewById(R.id.lb_set_hum);
+        lb_set_brt = (TextView) findViewById(R.id.lb_set_brt);
+        lb_set_temp = (TextView) findViewById(R.id.lb_set_temp);
+
+        init_seekbar();
+
+        init_switch();
+
+
     }
 
     public void onClickBtn(View view) {
-
-
-//        Button button = (Button) findViewById(R.id.bt_bt_connect);
-
-
-//        button.setText("Connected");
 
         lb_status.setText("Connected");
         lb_hum.setText("99");
@@ -334,11 +327,6 @@ public class MainActivity extends AppCompatActivity {
         lb_brt.setText("33");
 
         lb_set_hum.setText("33");
-
-        sendMessage("1");
-
-
-
     }
 
     /**
@@ -388,38 +376,19 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.secure_connect_scan: {
-                // Launch the DeviceListActivity to see devices and do scan
-//                Intent serverIntent = new Intent(MainActivity.this, DeviceListActivity.class);
-//                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
-
-
                 return true;
             }
             case R.id.insecure_connect_scan: {
-                // Launch the DeviceListActivity to see devices and do scan
-//                Intent serverIntent = new Intent(MainActivity.this, DeviceListActivity.class);
-//                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
                 return true;
             }
             case R.id.discoverable: {
-                // Ensure this device is discoverable by others
-//                ensureDiscoverable();
-                // Get the BluetoothDevice object
-                BluetoothDevice device = mBluetoothAdapter.getRemoteDevice("98:D3:31:30:4B:E3");
-                // Attempt to connect to the device
+                BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(BLUETOOTH_DEVICE_ID);
+
+                // TRUE for Secure Connection
                 mChatService.connect(device, true);
                 return true;
             }
         }
         return false;
-    }
-
-    private void ensureDiscoverable() {
-        if (mBluetoothAdapter.getScanMode() !=
-                BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
-            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-            startActivity(discoverableIntent);
-        }
     }
 }
