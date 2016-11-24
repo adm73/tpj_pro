@@ -166,6 +166,14 @@ public class MainActivity extends AppCompatActivity {
         sb_brt = (SeekBar) findViewById(R.id.sb_brt);
         sb_temp = (SeekBar) findViewById(R.id.sb_temp);
 
+        sb_hum.setMax(100);
+        sb_brt.setMax(100);
+        sb_temp.setMax(36);
+
+        sb_hum.setProgress(80);
+        sb_brt.setProgress(60);
+        sb_temp.setProgress(30);
+
         sb_hum.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
 
@@ -176,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
 
 //                        Log.d("MA", "progress_value = " + progress_value);
                         String showedValue = String.valueOf(progress_value);
-                        lb_set_hum.setText(showedValue);
+                        lb_set_hum.setText(showedValue + "%");
                     }
 
                     @Override
@@ -185,6 +193,9 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
+                        Log.d("sb_hum", String.valueOf(seekBar.getProgress()));
+                        sendMessage("S");   // Soil Moisture
+                        sendMessage(String.valueOf(Character.toChars(seekBar.getProgress())));   // Value
                     }
                 }
         );
@@ -200,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
 //                        Log.d("MA", "progress_value = " + progress_value);
 
                         String showedValue = String.valueOf(progress_value);
-                        lb_set_brt.setText(showedValue);
+                        lb_set_brt.setText(showedValue + "%");
                     }
 
                     @Override
@@ -209,11 +220,12 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
+                        Log.d("sb_brt", String.valueOf(seekBar.getProgress()));
                     }
                 }
         );
 
-        sb_brt.setOnSeekBarChangeListener(
+        sb_temp.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
 
                     int progress_value = 0;
@@ -223,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
 
 //                        Log.d("MA", "progress_value = " + progress_value);
                         String showedValue = String.valueOf(progress_value);
-                        lb_set_temp.setText(showedValue);
+                        lb_set_temp.setText(showedValue + "°C");
                     }
 
                     @Override
@@ -232,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
+                        Log.d("sb_temp", String.valueOf(seekBar.getProgress()));
                     }
                 }
         );
@@ -245,9 +258,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d("MA", "Cover Switch");
-                sendMessage("C");
-
+                if(isChecked == true) {
+                    Log.d("MA", "Cover Switch ON");
+                    sendMessage("C");
+                }
+                else
+                {
+                    Log.d("MA", "Cover Switch OFF");
+                    sendMessage("c");
+                }
             }
 
         });
@@ -257,8 +276,16 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d("MA", "Fan Switch");
-                sendMessage("F");
+                if(isChecked == true)
+                {
+                    Log.d("MA", "Fan Switch ON");
+                    sendMessage("F");
+                }
+                else
+                {
+                    Log.d("MA", "Fan Switch OFF");
+                    sendMessage("f");
+                }
             }
 
         });
@@ -268,8 +295,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d("MA", "Heater Switch");
-                sendMessage("H");
+                if(isChecked == true) {
+                    Log.d("MA", "Heater Switch ON");
+                    sendMessage("H");
+                }
+                else
+                {
+                    Log.d("MA", "Heater Switch OFF");
+                    sendMessage("h");
+                }
             }
 
         });
@@ -279,8 +313,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d("MA", "Water Pump Switch");
-                sendMessage("W");
+                if(isChecked == true) {
+                    Log.d("MA", "Water Pump Switch ON");
+                    sendMessage("W");
+                }
+                else
+                {
+                    Log.d("MA", "Water Pump Switch OFF");
+                    sendMessage("w");
+                }
             }
 
         });
@@ -311,6 +352,10 @@ public class MainActivity extends AppCompatActivity {
         lb_set_hum = (TextView) findViewById(R.id.lb_set_hum);
         lb_set_brt = (TextView) findViewById(R.id.lb_set_brt);
         lb_set_temp = (TextView) findViewById(R.id.lb_set_temp);
+
+        lb_set_hum.setText("80%");
+        lb_set_temp.setText("30°C");
+        lb_set_brt.setText("60%");
 
         init_seekbar();
 
