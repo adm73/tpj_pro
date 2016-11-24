@@ -220,7 +220,8 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
-                        Log.d("sb_brt", String.valueOf(seekBar.getProgress()));
+                        sendMessage("B");   // Soil Moisture
+                        sendMessage(String.valueOf(Character.toChars(seekBar.getProgress())));   // Value
                     }
                 }
         );
@@ -244,7 +245,8 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
-                        Log.d("sb_temp", String.valueOf(seekBar.getProgress()));
+                        sendMessage("T");   // Soil Moisture
+                        sendMessage(String.valueOf(Character.toChars(seekBar.getProgress())));   // Value
                     }
                 }
         );

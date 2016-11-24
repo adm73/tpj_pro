@@ -443,24 +443,24 @@ void tr_set_tmp(void)
           is_TR_TMP = 1;
 }
 
-static int is_coveropen = 0;
+static int is_cover_on = 0;
 
 void cover_operate(int on)
 {
   if(on == 1)
   {
-    if(is_coveropen == 1)
+    if(is_cover_on == 1)
       return ;
     servo_cover_open();
-    is_coveropen = 1;
+    is_cover_on = 1;
   }
   else
   {
-    if(is_coveropen == 0)
+    if(is_cover_on == 0)
       return ;
       
     servo_cover_close();
-    is_coveropen = 0;
+    is_cover_on = 0;
   }
 }
 
@@ -827,13 +827,13 @@ void loop()
 
   if(brt_shouldopen() == 1)
   {
-    Serial.println("Cover OPEN");
+    // Serial.println("Cover OPEN");
     if(!islocked[LOCK_COVER]) cover_operate(1);
 
   }
   else
   {
-    Serial.println("Cover Close");
+    // Serial.println("Cover Close");
     if(!islocked[LOCK_COVER]) cover_operate(0);
   }
 
@@ -862,7 +862,7 @@ void loop()
   if(cur_temp >=  max_temp) // Hot
   {
     // Fan on
-    Serial.println("Fan ON, Heater OFF");
+    // Serial.println("Fan ON, Heater OFF");
     
     if(!islocked[LOCK_FAN]) fan_operate(1);
 
@@ -872,7 +872,7 @@ void loop()
   else if((cur_temp < max_temp) && (cur_temp >= min_temp)) // Normal
   {
     // Fan OFF
-    Serial.println("Fan OFF, Heater OFF");
+    // Serial.println("Fan OFF, Heater OFF");
     if(!islocked[LOCK_FAN]) fan_operate(0);
 
     // Heater OFF
@@ -881,7 +881,7 @@ void loop()
   else // Cold
   {
     //Fan off
-    Serial.println("Fan OFF, Heater ON");
+    // Serial.println("Fan OFF, Heater ON");
     if(!islocked[LOCK_FAN]) fan_operate(0);
 
     // Heater ON
@@ -889,6 +889,37 @@ void loop()
   }
   
   #endif
+  
+  Serial.println("Status");
+  Serial.print("is_heater_on = "); //is_wpump_on
+  Serial.println(is_heater_on);
+  
+  Serial.print("is_wpump_on = ");
+  Serial.println(is_wpump_on);
+  
+  Serial.print("is_fan_on = ");
+  Serial.println(is_fan_on);
+  
+  Serial.print("is_cover_on = ");
+  Serial.println(is_cover_on);
+  
+  Serial.print("cur_temp = ");
+  Serial.println(cur_temp);
+  
+  Serial.print("max_temp = ");
+  Serial.println(max_temp);
+  
+  Serial.print("cur_hum = ");
+  Serial.println(cur_hum);
+  
+  Serial.print("max_hum = ");
+  Serial.println(max_hum);
+  
+  Serial.print("cur_brt = ");
+  Serial.println(cur_brt);
+  
+  Serial.print("max_brt = ");
+  Serial.println(max_brt);
   
   count++;
 
