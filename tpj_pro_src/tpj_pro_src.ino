@@ -117,6 +117,8 @@ int hum_get_value(void)
     
   hum /= 10;
   
+  hum = 100 - hum;
+  
   return hum;
 }
 
