@@ -109,16 +109,16 @@ void hum_set_value(int __hum)
 int hum_get_value(void)
 {
   int hum = analogRead(PIN_HUM_SENSOR);
-  
+
   if(hum < 0)
     hum = 0;
   else if(hum >= 1000)
     hum = 999;
-    
+
   hum /= 10;
-  
+
   hum = 100 - hum;
-  
+
   return hum;
 }
 
@@ -144,18 +144,18 @@ int brt_get_value(void)
     v1 = 0;
   else if(v1 >= 1000)
     v1 = 999;
-    
+
   v2 = brt_get_sensor2();
   // Serial.print("brt2 = ");
   // Serial.println(v2);
-  
+
   if(v2 < 0)
     v2 = 0;
   else if(v2 >= 1000)
     v2 = 999;
 
   ret = (v1 + v2) / 2;
-  
+
   ret /= 10;
 
   return ret;
@@ -181,9 +181,9 @@ int temp_get_value(void)
   int temp;
   dht DHT;
   DHT.read11(PIN_TEMP_SENSOR);
-  
+
   temp = (int)DHT.temperature;
-  
+
   // Serial.println(DHT.temperature);
   if(temp >= 40)
     temp = 36;
@@ -278,7 +278,7 @@ int brt_shouldopen(void)
 
   v1 = brt_get_sensor1();
   v2 = brt_get_sensor2();
-  
+
   v1 /= 10;
   v2 /= 10;
 
@@ -400,20 +400,20 @@ void bt_send_msg(char *prefix, int value)
 char bt_get_msg(void)
 {
   char ch;
-  
+
   ch = 0x0;
   if(BT.available())
   {
     ch = BT.read();
-    
+
     if(ch < 0)
       ch = 0x0;
-      
+
     if(ch == 0xD || ch == 0xA)
       ch = 0x0;
-      
+
   }
-  
+
   return ch;
 }
 
@@ -460,7 +460,7 @@ void cover_operate(int on)
   {
     if(is_cover_on == 0)
       return ;
-      
+
     servo_cover_close();
     is_cover_on = 0;
   }
@@ -481,7 +481,7 @@ void heater_operate(int on)
   {
     if(is_heater_on == 0)
       return ;
-      
+
     heater_disable();
     is_heater_on = 0;
   }
@@ -492,7 +492,7 @@ static int is_fan_on = 0;
 void fan_operate(int on)
 {
   // return ;
-  
+
   if(on == 1)
   {
     if(is_fan_on == 1)
@@ -597,7 +597,7 @@ void setup()
 
   // Servo
   servo_myinit();
-  
+
   // Temperature
   temp_myinit();
 
@@ -632,13 +632,13 @@ void loop()
 {
   // get Brightness
   brt_set_value(brt_get_value());
-  
+
   if(count > 4)
   {
     lcd_display_brt(cur_brt);
     bt_send_msg(" BRT,", cur_brt);
   }
- 
+
   delay(200);
 
   // Get Humidity
@@ -648,30 +648,30 @@ void loop()
     lcd_display_hum(cur_hum);
     bt_send_msg(" HUM,", cur_hum);
   }
-  
+
   delay(200);
-  
+
 
   // Get Temperature
   temp_set_value(temp_get_value());
-  
+
   if(count > 4)
   {
     lcd_display_tmp(cur_temp);
     bt_send_msg(" TMP,", cur_temp);
-    
+
     count = 0;
   }
-  
+
   delay(200);
-  
+
   ch = 0x0;
   ch = bt_get_msg();
   if(ch)
   {
     Serial.println(ch);
     bt_send_msg(" RECV,", ch);
-    
+
     switch(ch)
     {
       // Heater Switch Operate
@@ -681,8 +681,8 @@ void loop()
           set_trigger_value(ch);
           break;
         }
-        
-        
+
+
         heater_operate(1);
         if(islocked[LOCK_HEATER] == 0)
           islocked[LOCK_HEATER] = 1;
@@ -696,7 +696,7 @@ void loop()
           set_trigger_value(ch);
           break;
         }
-        
+
         heater_operate(0);
         if(islocked[LOCK_HEATER] == 0)
           islocked[LOCK_HEATER] = 1;
@@ -711,7 +711,7 @@ void loop()
           set_trigger_value(ch);
           break;
         }
-        
+
         cover_operate(1);
         if(islocked[LOCK_COVER] == 0)
           islocked[LOCK_COVER] = 1;
@@ -725,7 +725,7 @@ void loop()
           set_trigger_value(ch);
           break;
         }
-        
+
         cover_operate(0);
         if(islocked[LOCK_COVER] == 0)
           islocked[LOCK_COVER] = 1;
@@ -740,7 +740,7 @@ void loop()
           set_trigger_value(ch);
           break;
         }
-        
+
         fan_operate(1);
         if(islocked[LOCK_FAN] == 0)
           islocked[LOCK_FAN] = 1;
@@ -754,7 +754,7 @@ void loop()
           set_trigger_value(ch);
           break;
         }
-        
+
         fan_operate(0);
         if(islocked[LOCK_FAN] == 0)
           islocked[LOCK_FAN] = 1;
@@ -769,7 +769,7 @@ void loop()
           set_trigger_value(ch);
           break;
         }
-        
+
         wpump_operate(1);
         if(islocked[LOCK_WPUMP] == 0)
           islocked[LOCK_WPUMP] = 1;
@@ -783,7 +783,7 @@ void loop()
           set_trigger_value(ch);
           break;
         }
-        
+
         wpump_operate(0);
         if(islocked[LOCK_WPUMP] == 0)
           islocked[LOCK_WPUMP] = 1;
@@ -822,9 +822,9 @@ void loop()
         set_trigger_value(ch);
         break;
     }
-    
+
   }
-  
+
   #if 1
 
   if(brt_shouldopen() == 1)
@@ -839,13 +839,14 @@ void loop()
     if(!islocked[LOCK_COVER]) cover_operate(0);
   }
 
-  if(cur_hum < min_hum)   // Wet
+  if(cur_hum < min_hum) //  > max_hum = dry
   {
-    led_control(0, 0, 1);  // r, y, g
+    led_control(1, 0, 0);  // r, y, g
 
-    // Disable Water Pump
-    if(!islocked[LOCK_WPUMP]) wpump_operate(0);
-  }
+    // Enable Water Pump
+    if(!islocked[LOCK_WPUMP]) wpump_operate(1);
+
+      }
   else if((cur_hum >= min_hum) && (cur_hum < max_hum)) // Normal
   {
     led_control(0, 1, 0);  // r, y, g
@@ -853,19 +854,19 @@ void loop()
     // Disable Water Pump
     if(!islocked[LOCK_WPUMP]) wpump_operate(0);
   }
-  else  //  > max_hum = dry
+  else    // Wet
   {
-    led_control(1, 0, 0);  // r, y, g
+    led_control(0, 0, 1);  // r, y, g
 
-    // Enable Water Pump
-    if(!islocked[LOCK_WPUMP]) wpump_operate(1);
+    // Disable Water Pump
+    if(!islocked[LOCK_WPUMP]) wpump_operate(0);
   }
-  
+
   if(cur_temp >=  max_temp) // Hot
   {
     // Fan on
     // Serial.println("Fan ON, Heater OFF");
-    
+
     if(!islocked[LOCK_FAN]) fan_operate(1);
 
     // Heater OFF
@@ -889,40 +890,40 @@ void loop()
     // Heater ON
     if(!islocked[LOCK_HEATER]) heater_operate(1);
   }
-  
+
   #endif
-  
+
   Serial.println("Status");
   Serial.print("is_heater_on = "); //is_wpump_on
   Serial.println(is_heater_on);
-  
+
   Serial.print("is_wpump_on = ");
   Serial.println(is_wpump_on);
-  
+
   Serial.print("is_fan_on = ");
   Serial.println(is_fan_on);
-  
+
   Serial.print("is_cover_on = ");
   Serial.println(is_cover_on);
-  
+
   Serial.print("cur_temp = ");
   Serial.println(cur_temp);
-  
+
   Serial.print("max_temp = ");
   Serial.println(max_temp);
-  
+
   Serial.print("cur_hum = ");
   Serial.println(cur_hum);
-  
+
   Serial.print("max_hum = ");
   Serial.println(max_hum);
-  
+
   Serial.print("cur_brt = ");
   Serial.println(cur_brt);
-  
+
   Serial.print("max_brt = ");
   Serial.println(max_brt);
-  
+
   count++;
 
   delay (2000);
