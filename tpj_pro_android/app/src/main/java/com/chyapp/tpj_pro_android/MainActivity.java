@@ -134,6 +134,23 @@ public class MainActivity extends AppCompatActivity {
                         lb_brt.setText(items[1]);
                     else if(items[0].equals("TMP"))
                         lb_temp.setText(items[1]);
+                    else if(items[0].equals("FAN")) {
+
+                        boolean isChecked = items[1].equals("1");
+                        sw_fan.setChecked(isChecked);
+                    }
+                    else if(items[0].equals("HEATER")) {
+                        boolean isChecked = items[1].equals("1");
+                        sw_heater.setChecked(isChecked);
+                    }
+                    else if(items[0].equals("WPUMP")) {
+                        boolean isChecked = items[1].equals("1");
+                        sw_wpump.setChecked(isChecked);
+                    }
+                    else if(items[0].equals("COVER")) {
+                        boolean isChecked = items[1].equals("1");
+                        sw_cover.setChecked(isChecked);
+                    }
 
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
@@ -256,6 +273,9 @@ public class MainActivity extends AppCompatActivity {
     public void init_switch()
     {
         sw_cover = (Switch) findViewById(R.id.swh_cover);
+
+        sw_cover.setChecked(true);
+
         sw_cover.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -274,6 +294,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         sw_fan = (Switch) findViewById(R.id.swh_fan);
+        sw_fan.setChecked(false);
         sw_fan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -293,6 +314,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         sw_heater = (Switch) findViewById(R.id.swh_heater);
+
+        sw_heater.setChecked(false);
         sw_heater.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -311,6 +334,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         sw_wpump = (Switch) findViewById(R.id.swh_wpump);
+
+        sw_wpump.setChecked(true);
         sw_wpump.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override

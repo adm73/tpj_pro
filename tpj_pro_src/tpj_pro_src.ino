@@ -34,6 +34,7 @@ int PIN_SERVO_4 = 30;
 int PIN_WPUMP_ENABLE = 12; // enable
 int PIN_WPUMP_IN = 11;    // in
 int PIN_WPUMP_RELAY = 13;    // for relay
+int PIN_FAN_RELAY =24;
 int PIN_WPUMP_SPEED = A0;    // speed
 
 // LED
@@ -42,8 +43,8 @@ int PIN_LED_YELLOW = 9;
 int PIN_LED_RED = 8;
 
 // Fan Motor
-int PIN_FAN_MOTOR_ENABLE = 5; // pin enable
-int PIN_FAN_MOTOR_IN = 4;    // pin in
+int PIN_FAN_MOTOR_ENABLE = 2; // pin enable
+int PIN_FAN_MOTOR_IN = 3;    // pin in
 int PIN_FAN_MOTOR_SPEED = A1;  // speed
 
 #define SERVO_MAX_ANGLE 180
@@ -353,18 +354,22 @@ void wpump_motor_myinit(void)
 void enable_fan(void)
 {
   digitalWrite(PIN_FAN_MOTOR_IN, HIGH);
+  digitalWrite(PIN_FAN_RELAY, HIGH);
+  
 }
 
 void disable_fan(void)
 {
   digitalWrite(PIN_FAN_MOTOR_IN, LOW);
+  digitalWrite(PIN_FAN_RELAY, LOW);
+ 
 }
 
 void fan_motor_myinit(void)
 {
   pinMode(PIN_FAN_MOTOR_IN, OUTPUT); // pin 4
   pinMode(PIN_FAN_MOTOR_ENABLE, OUTPUT); // pin 5
-
+  pinMode(PIN_FAN_RELAY, OUTPUT); //FAN RELAY
   int speed = analogRead(PIN_FAN_MOTOR_SPEED) / 4;
   analogWrite(PIN_FAN_MOTOR_ENABLE, speed);
 
@@ -893,6 +898,7 @@ void loop()
 
   #endif
 
+#if 0
   Serial.println("Status");
   Serial.print("is_heater_on = "); //is_wpump_on
   Serial.println(is_heater_on);
@@ -923,8 +929,10 @@ void loop()
 
   Serial.print("max_brt = ");
   Serial.println(max_brt);
+#endif
 
   count++;
 
   delay (2000);
 }
+
