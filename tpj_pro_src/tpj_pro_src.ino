@@ -55,7 +55,7 @@ int PIN_FAN_MOTOR_SPEED = A1;  // speed
 
 #define BRT_MAX_VALUE  70
 
-#define TMP_MAX_VALUE  30
+#define TMP_MAX_VALUE  34
 #define TMP_MIN_VALUE  20
 
 #define LOCK_HEATER 0
@@ -638,7 +638,7 @@ void loop()
   // get Brightness
   brt_set_value(brt_get_value());
 
-  if(count > 4)
+//  if(count > 4)
   {
     lcd_display_brt(cur_brt);
     bt_send_msg(" BRT,", cur_brt);
@@ -648,7 +648,7 @@ void loop()
 
   // Get Humidity
   hum_set_value(hum_get_value());
-  if(count > 4)
+//  if(count > 4)
   {
     lcd_display_hum(cur_hum);
     bt_send_msg(" HUM,", cur_hum);
@@ -660,7 +660,7 @@ void loop()
   // Get Temperature
   temp_set_value(temp_get_value());
 
-  if(count > 4)
+//  if(count > 4)
   {
     lcd_display_tmp(cur_temp);
     bt_send_msg(" TMP,", cur_temp);
@@ -830,7 +830,7 @@ void loop()
 
   }
 
-  #if 1
+  #if 0
 
   if(brt_shouldopen() == 1)
   {

@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                     else if(items[0].equals("BRT"))
                         lb_brt.setText(items[1]);
                     else if(items[0].equals("TMP"))
-                        lb_temp.setText(items[1]);
+                        lb_temp.setText("    "+ items[1] + "    ");
                     else if(items[0].equals("FAN")) {
 
                         boolean isChecked = items[1].equals("1");
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
         sb_hum.setMax(100);
         sb_brt.setMax(100);
-        sb_temp.setMax(36);
+        sb_temp.setMax(40);
 
         sb_hum.setProgress(80);
         sb_brt.setProgress(60);
@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
 
 //                        Log.d("MA", "progress_value = " + progress_value);
                         String showedValue = String.valueOf(progress_value);
-                        lb_set_temp.setText(showedValue + "°C");
+                        lb_set_temp.setText(showedValue);
                     }
 
                     @Override
@@ -262,8 +262,37 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
-                        sendMessage("T");   // Soil Moisture
-                        sendMessage(String.valueOf(Character.toChars(seekBar.getProgress())));   // Value
+
+
+                        int value = seekBar.getProgress();
+                        if(value > 35)
+                        {
+                            sendMessage("f");
+                            for(int i = 0; i < 256; i++)
+                                ;
+                            sendMessage("H");
+                        }
+                        else if(value < 16)
+                        {
+                            sendMessage("h");
+
+                            for(int i = 0; i < 256; i++)
+                                ;
+
+                            sendMessage("F");
+                        }
+                        else
+                        {
+                            sendMessage("f");
+                            for(int i = 0; i < 256; i++)
+                                ;
+                            sendMessage("h");
+                            for(int i = 0; i < 256; i++)
+                                ;
+                        }
+
+                        // sendMessage("T");
+                        // sendMessage(String.valueOf(Character.toChars(seekBar.getProgress() / 3)));   // Value
                     }
                 }
         );
@@ -381,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
         lb_set_temp = (TextView) findViewById(R.id.lb_set_temp);
 
         lb_set_hum.setText("80%");
-        lb_set_temp.setText("30°C");
+        lb_set_temp.setText("30");
         lb_set_brt.setText("60%");
 
         init_seekbar();

@@ -55,7 +55,7 @@
 
     <TextView
         android:text="@string/temperature"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="74dp"
         android:id="@+id/lb_temperaure"
@@ -150,8 +150,8 @@
         android:layout_alignTop="@+id/sb_temp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="14dp"
-        android:layout_marginEnd="14dp" />
+        android:layout_marginRight="0dp"
+        android:layout_marginEnd="0dp" />
 
     <SeekBar
         android:layout_width="100dp"
